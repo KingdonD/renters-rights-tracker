@@ -8,17 +8,46 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <script>
+    /* Set theme before paint to avoid a flash of the wrong colour scheme. */
+    (function () {
+      var saved = localStorage.getItem("theme");
+      var theme = saved || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+  </script>
 </head>
 <body>
-  <div class="page">
+  <nav class="site-nav">
+    <div class="site-nav-inner">
+      <a class="site-nav-brand" href="#top">RRA Tracker</a>
+      <div class="site-nav-links">
+        <a href="#status">Status</a>
+        <a href="#timeline">Timeline</a>
+        <a href="#stakeholders">Stakeholders</a>
+      </div>
+      <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle dark mode">
+        <span class="theme-toggle-icon" aria-hidden="true">&#9788;</span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="page" id="top">
     <header class="page-header">
       <p class="eyebrow">Policy Implementation Tracker</p>
       <h1>Renters&rsquo; Rights Act</h1>
       <p class="subtitle">Tracking the phased rollout of the Renters&rsquo; Rights Act in England</p>
+
+      <div class="progress-summary" aria-label="Overall rollout progress">
+        <div class="progress-bar">
+          <div class="progress-fill" style="width: 33%;"></div>
+        </div>
+        <p class="progress-label">1 of 3 phases complete</p>
+      </div>
     </header>
 
     <main>
-      <section class="status-box" aria-labelledby="status-heading">
+      <section class="status-box" id="status" aria-labelledby="status-heading">
         <p class="status-tag">Current status</p>
         <h2 id="status-heading" class="status-headline">Phase 1 is live.</h2>
         <p class="status-detail">
@@ -30,7 +59,7 @@
         </p>
       </section>
 
-      <section class="timeline" aria-labelledby="timeline-heading">
+      <section class="timeline" id="timeline" aria-labelledby="timeline-heading">
         <h2 id="timeline-heading" class="section-heading">Phase Timeline</h2>
 
         <ol class="timeline-list">
@@ -42,15 +71,27 @@
                 <span class="status-badge status-complete">Complete</span>
               </div>
               <p class="timeline-meta">Live since 1 May 2026</p>
-              <ul class="timeline-points">
-                <li>Section 21 abolished.</li>
-                <li>All assured shorthold tenancies, including existing ones, converted to assured periodic tenancies with no fixed term.</li>
-                <li>Landlords must now use Section 8 grounds to seek possession.</li>
-                <li>Rent increases limited to once per year via a Section 13 notice.</li>
-                <li>A ban on demanding more than one month&rsquo;s rent up front.</li>
-                <li>New rules against discriminating against tenants with children or on benefits.</li>
-              </ul>
+              <details class="timeline-details">
+                <summary>View details</summary>
+                <ul class="timeline-points">
+                  <li>Section 21 abolished.</li>
+                  <li>All assured shorthold tenancies, including existing ones, converted to assured periodic tenancies with no fixed term.</li>
+                  <li>Landlords must now use Section 8 grounds to seek possession.</li>
+                  <li>Rent increases limited to once per year via a Section 13 notice.</li>
+                  <li>A ban on demanding more than one month&rsquo;s rent up front.</li>
+                  <li>New rules against discriminating against tenants with children or on benefits.</li>
+                </ul>
+              </details>
             </div>
+
+            <figure class="phase-figure">
+              <img
+                src="images/before-after-1-may-2026.png"
+                width="1080" height="1080"
+                loading="lazy"
+                alt="Comparison of renting in England before and since 1 May 2026. Section 21 no-fault evictions replaced by the need for a legal reason; fixed terms replaced by rolling tenancies; one rent rise a year, which tenants can challenge; no more than one month&rsquo;s rent up front; blanket bans on renters with children or on benefits now illegal.">
+              <figcaption>What changed for private renters in England on 1 May 2026. Source: GOV.UK.</figcaption>
+            </figure>
           </li>
 
           <li class="timeline-item">
@@ -61,11 +102,14 @@
                 <span class="status-badge status-upcoming">Upcoming</span>
               </div>
               <p class="timeline-meta">Rollout begins 15 December 2026</p>
-              <ul class="timeline-points">
-                <li>The Private Rented Sector Database, a register landlords must sign up to, opens on 15 December 2026, starting in the West Midlands and rolling out one region a month. All landlords must be registered by 14 November 2027.</li>
-                <li>The PRS Landlord Ombudsman, a redress scheme landlords will be required to join, follows after the database, and the government expects it to be operational in 2028.</li>
-              </ul>
-              <p class="timeline-note">This is the phase to watch most closely, because it is where the Act either gains teeth or slips.</p>
+              <details class="timeline-details">
+                <summary>View details</summary>
+                <ul class="timeline-points">
+                  <li>The Private Rented Sector Database, a register landlords must sign up to, opens on 15 December 2026, starting in the West Midlands and rolling out one region a month. All landlords must be registered by 14 November 2027.</li>
+                  <li>The PRS Landlord Ombudsman, a redress scheme landlords will be required to join, follows after the database, and the government expects it to be operational in 2028.</li>
+                </ul>
+                <p class="timeline-note">This is the phase to watch most closely, because it is where the Act either gains teeth or slips.</p>
+              </details>
             </div>
           </li>
 
@@ -77,18 +121,21 @@
                 <span class="status-badge status-upcoming">Upcoming</span>
               </div>
               <p class="timeline-meta">Dates mostly unconfirmed, running to 2030 and beyond</p>
-              <ul class="timeline-points">
-                <li>Private landlords will need to meet an energy performance rating of EPC C, or hold a valid exemption, by 1 October 2030.</li>
-                <li>The Decent Homes Standard will be extended to the private rented sector.</li>
-                <li>A consultation on extending Awaab&rsquo;s Law, the duty to fix hazards within set timescales, to private renting opened on 9 October 2026 and closes on 18 December 2026.</li>
-              </ul>
-              <p class="timeline-note">Most dates here are still to be confirmed through secondary legislation.</p>
+              <details class="timeline-details">
+                <summary>View details</summary>
+                <ul class="timeline-points">
+                  <li>Private landlords will need to meet an energy performance rating of EPC C, or hold a valid exemption, by 1 October 2030.</li>
+                  <li>The Decent Homes Standard will be extended to the private rented sector.</li>
+                  <li>A consultation on extending Awaab&rsquo;s Law, the duty to fix hazards within set timescales, to private renting opened on 9 October 2026 and closes on 18 December 2026.</li>
+                </ul>
+                <p class="timeline-note">Most dates here are still to be confirmed through secondary legislation.</p>
+              </details>
             </div>
           </li>
         </ol>
       </section>
 
-      <section class="stakeholders" aria-labelledby="stakeholders-heading">
+      <section class="stakeholders" id="stakeholders" aria-labelledby="stakeholders-heading">
         <h2 id="stakeholders-heading" class="section-heading">Stakeholder Views</h2>
 
         <div class="stakeholder-list">
@@ -147,5 +194,7 @@
       <p>Last updated: 11 November 2026</p>
     </footer>
   </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
